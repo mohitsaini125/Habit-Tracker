@@ -1,15 +1,8 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "expo-router";
-import { useCallback, useEffect, useState } from "react";
-import { Text, View, Dimensions, StyleSheet, ScrollView } from "react-native";
-import {
-  LineChart,
-  BarChart,
-  PieChart,
-  ProgressChart,
-  ContributionGraph,
-  StackedBarChart,
-} from "react-native-chart-kit";
+import { useState } from "react";
+import { Dimensions, ScrollView, StyleSheet, Text, View } from "react-native";
+import { BarChart } from "react-native-chart-kit";
 export default function Test() {
   const [taskData, setTaskData] = useState([]);
   useFocusEffect(function () {
@@ -44,7 +37,6 @@ export default function Test() {
       },
     ],
   };
-  console.log(days);
   return (
     <View>
       {/* {taskData.map(function (day, index) {

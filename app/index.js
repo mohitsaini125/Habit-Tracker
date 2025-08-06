@@ -1,5 +1,6 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { LinearGradient } from "expo-linear-gradient";
-import { Hexagon, Plus } from "phosphor-react-native";
+import { Plus } from "phosphor-react-native";
 import { useEffect, useState } from "react";
 import {
   ScrollView,
@@ -11,7 +12,6 @@ import {
 import AddTaskModal from "../components/addTaskModal";
 import TaskItems from "../components/taskItems";
 import { days, months } from "../lib/constants";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function getsuffix(day) {
   if (day === 1 || day === 21 || day === 31) return "st";
