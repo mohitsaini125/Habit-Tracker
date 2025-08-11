@@ -8,19 +8,29 @@ export default function Test() {
   useFocusEffect(function () {
     AsyncStorage.getItem("taskData").then(function (data) {
       if (data) {
-        const taskData = JSON.parse(data);
-        setTaskData(taskData);
+        const parsed = JSON.parse(data);
+        if (Array.isArray(parsed)) {
+          setTaskData(parsed);
+        } else {
+          setTaskData([]);
+        }
+      } else {
+        setTaskData([]);
       }
     });
   });
+
   const daysPerTasks = [];
-  taskData.forEach(function (day) {
-    const totalTasks = day.length;
-    const completedTasks = day.filter(function (task) {
-      return task.isCompleted;
-    }).length;
-    const percentage = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
-    daysPerTasks.push(percentage);
+  (taskData || []).forEach(function (day) {
+    if (Array.isArray(day)) {
+      const totalTasks = day.length;
+      const completedTasks = day.filter((task) => task?.isCompleted).length;
+      const percentage =
+        totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
+      daysPerTasks.push(percentage);
+    } else {
+      daysPerTasks.push(0); // or skip
+    }
   });
 
   const days = [];

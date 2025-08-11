@@ -68,7 +68,7 @@ export default function TaskItems({
       arr[index].title = title;
       updateTodaysTasks(arr);
       AsyncStorage.getItem("taskData").then(function (data) {
-        const newArr = JSON.parse(data);
+        const newArr = data ? JSON.parse(data) : [[]];
         newArr[newArr.length - 1] = arr;
         AsyncStorage.setItem("taskData", JSON.stringify(newArr));
       });

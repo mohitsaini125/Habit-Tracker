@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { LinearGradient } from "expo-linear-gradient";
-import { Plus } from "phosphor-react-native";
+import { PlusIcon } from "phosphor-react-native";
 import { useEffect, useState } from "react";
 import {
   ScrollView,
@@ -31,10 +31,15 @@ export default function HomePage() {
     AsyncStorage.getItem("taskData").then(function (data) {
       if (data) {
         const taskData = JSON.parse(data);
-        setTasks(taskData[taskData.length - 1]);
+        if (Array.isArray(taskData) && taskData.length > 0) {
+          setTasks(taskData[taskData.length - 1] || []);
+        } else {
+          setTasks([]);
+          AsyncStorage.setItem("taskData", JSON.stringify([[]]));
+        }
       } else {
-        const arr = [[]];
-        AsyncStorage.setItem("taskData", JSON.stringify(arr));
+        setTasks([]);
+        AsyncStorage.setItem("taskData", JSON.stringify([[]]));
       }
     });
   }, []);
@@ -97,7 +102,7 @@ export default function HomePage() {
         onPress={openModal}
       >
         <View>
-          <Plus size={24} weight="bold" color="white" />
+          <PlusIcon size={24} weight="bold" color="white" />
         </View>
       </TouchableHighlight>
       <TouchableHighlight style={styles.newDay} onPress={startNewDay}>
